@@ -3,9 +3,14 @@ export const FETCH_FEEDING = "FETCH_FEDDING";
 import TEST_DATA from "../../data/test_data";
 import Feeding from "../../domain/feeding";
 
+export interface ActionData {
+  type: string
+  data: any
+}
+
 export const fetchFeeding = () => {
   const data = TEST_DATA;
-  return { type: FETCH_FEEDING, feeding: groupPerDay(data) };
+  return { type: FETCH_FEEDING, data: groupPerDay(data) };
 };
 
 export const groupPerDay = (data: Feeding[]) => {
