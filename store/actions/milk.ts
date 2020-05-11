@@ -1,4 +1,5 @@
 export const FETCH_FEEDING = "FETCH_FEDDING";
+export const FETCH_FEEDING_DAY = "FETCH_FEDDING_DAY";
 
 import TEST_DATA from "../../data/test_data";
 import Feeding from "../../domain/feeding";
@@ -6,6 +7,11 @@ import Feeding from "../../domain/feeding";
 export interface ActionData {
   type: string
   data: any
+}
+
+export const fetchFeedingDay = (date: Date) => {
+  const data = TEST_DATA;
+  return {type: FETCH_FEEDING_DAY, data: data}  //FIXME
 }
 
 export const fetchFeeding = () => {
