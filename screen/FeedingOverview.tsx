@@ -22,17 +22,25 @@ const FeedingOverview = (props) => {
     loadFeeding();
   }, [loadFeeding]);
 
+  const onItemSelected = (date: Date) => {
+    props.navigation.navigate("FeedingDayOverview", {
+      date: date.getTime()
+    });
+  };
+
   return (
     <View style={styles.screen}>
       <FlatList
-        keyExtractor={(item: Feeding) => item.date.getTime().toString()}
+        keyExtractor={(item: Feeding) => item.id}
         data={feeding}
         renderItem={(itemData) => {
           return (
             <FeedingItem
               date={itemData.item.date.toISOString().slice(0, 10)}
               volume={itemData.item.volume}
-              onSelect={() => {}}
+              onSelect={() => {
+                onItemSelected(itemData.item.date)
+              }}
             ></FeedingItem>
           );
         }}

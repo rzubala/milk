@@ -33,7 +33,7 @@ const FeedingItem = (props) => {
 
 const styles = StyleSheet.create({
   feeding: {
-    margin: 5,
+    margin: 1,
     height: 70,
   },
   touchable: {

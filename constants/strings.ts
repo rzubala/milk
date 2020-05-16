@@ -3,11 +3,13 @@ import i18n from "i18n-js";
 const en = {
     Milk: 'Milk',
     Feeding: 'Feeding',
+    DailyFeeding: 'Daily feeding'
 }
 
 const pl = {
     Milk: 'Mleko',
     Feeding: 'Karmienie',
+    DailyFeeding: 'Dzienne karmienie'
 }
 
 i18n.translations["en"] = en;

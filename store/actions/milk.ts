@@ -6,11 +6,18 @@ import Feeding from "../../domain/feeding";
 
 export interface ActionData {
   type: string
-  data: any
+  data: any,
+  date: number
 }
 
-export const fetchFeedingDay = (date: Date) => {
+export const fetchFeedingDay = (date) => {
   const data = TEST_DATA;
+  const fromDate = new Date(date);
+  fromDate.setHours(0, 0, 0, 0);
+  const toDate = new Date(fromDate.getTime() + (24 * 60 * 60 * 1000));
+
+  console.log(fromDate, toDate)
+
   return {type: FETCH_FEEDING_DAY, data: data}  //FIXME
 }
 
@@ -39,7 +46,7 @@ export const groupPerDay = (data: Feeding[]) => {
     .forEach((element) => {
       const volume = sumMap.get(element);
       result.push(
-        new Feeding(new Date(element), volume === undefined ? 0 : volume)
+        new Feeding(element.toString(), new Date(element), volume === undefined ? 0 : volume)
       );
     });
   return result;

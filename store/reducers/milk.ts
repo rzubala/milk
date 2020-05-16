@@ -2,7 +2,8 @@ import Feeding from '../../domain/feeding'
 import {FETCH_FEEDING, FETCH_FEEDING_DAY, ActionData} from '../actions/milk'
 
 const initialState = {
-    feeding: []
+    feeding: [],
+    dailyFeeding: {}
 }
 
 export default (state = initialState, action: ActionData) => {
@@ -14,9 +15,11 @@ export default (state = initialState, action: ActionData) => {
             }
         }
         case FETCH_FEEDING_DAY: {
+            const modifiedDailyFeeding = {...state.dailyFeeding}
+            modifiedDailyFeeding[action.date] = action.data
             return {
                 ...state,
-                feeding: action.data
+                dailyFeeding: modifiedDailyFeeding
             }
         }
     }
