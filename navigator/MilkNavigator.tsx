@@ -49,6 +49,11 @@ export const MilkNavigator = () => {
         component={FeedingDayScreen}
         options={FeedingDayScreenOptions}
       />
+      <MilkNavigatorStack.Screen
+        name="FeedingEdit"
+        component={FeedingEditScreen}
+        options={FeedingEditScreenOptions}
+      />
     </MilkNavigatorStack.Navigator>
   );
 };

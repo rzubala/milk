@@ -12,7 +12,7 @@ import { Ionicons } from "@expo/vector-icons";
 import i18n from "../constants/strings";
 
 import FeedingItem from "../components/FeedingItem";
-
+import Feeding from '../domain/feeding'
 import * as feedingActions from "../store/actions/milk";
 
 const FeedingDayOverview = (props) => {
@@ -34,6 +34,12 @@ const FeedingDayOverview = (props) => {
       headerTitle: i18n.t("DailyFeeding") + " " + new Date(date).toISOString().slice(0, 10),
     })
   }, [date])
+
+  const onItemSelected = (item: Feeding) => {
+    props.navigation.navigate("FeedingEdit", {
+      id: item.id
+    });
+  };
 
   if (!dailyFeeding) {
     return (
@@ -57,7 +63,7 @@ const FeedingDayOverview = (props) => {
             <FeedingItem
               date={time}
               volume={itemData.item.volume}
-              onSelect={() => {}}
+              onSelect={() => onItemSelected(itemData.item)}
             />
           );
         }}

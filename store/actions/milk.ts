@@ -21,7 +21,7 @@ export const fetchFeedingDay = (date) => {
 
 export const fetchFeeding = () => {
   const data = TEST_DATA;
-  return { type: FETCH_FEEDING, data: groupPerDay(data) };
+  return { type: FETCH_FEEDING, data: groupPerDay(data), rawData: data };
 };
 
 export const groupPerDay = (data: Feeding[]) => {

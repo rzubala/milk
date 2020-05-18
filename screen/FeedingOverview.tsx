@@ -23,7 +23,6 @@ const FeedingOverview = (props) => {
   }, [loadFeeding]);
 
   const onItemSelected = (date: Date) => {
-    console.log('onItemSelected', date, date.getTime())
     props.navigation.navigate("FeedingDayOverview", {
       date: date.getTime()
     });
