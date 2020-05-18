@@ -15,10 +15,8 @@ export const fetchFeedingDay = (date) => {
   const fromDate = new Date(date);
   fromDate.setHours(0, 0, 0, 0);
   const toDate = new Date(fromDate.getTime() + (24 * 60 * 60 * 1000));
-
-  console.log(fromDate, toDate)
-
-  return {type: FETCH_FEEDING_DAY, data: data}  //FIXME
+  const filtered = data.filter(item => item.date >= fromDate && item.date < toDate)
+  return {type: FETCH_FEEDING_DAY, data: filtered}
 }
 
 export const fetchFeeding = () => {

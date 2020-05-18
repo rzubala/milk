@@ -22,8 +22,8 @@ const FeedingItem = (props) => {
       <View style={styles.touchable}>
         <TouchableComponent onPress={props.onSelect} useForeground>
           <View style={styles.feedingRow}>
-            <Text>{props.date}</Text>
-            <Text>{props.volume}</Text>
+            <Text style={styles.date}>{props.date}</Text>
+            <Text style={styles.volume}>{props.volume}</Text>
           </View>
         </TouchableComponent>
       </View>
@@ -45,6 +45,13 @@ const styles = StyleSheet.create({
     justifyContent: 'space-evenly',
     alignItems: "center",
     height: '100%'
+  },
+  date: {
+    fontSize: 12
+  },
+  volume: {
+    fontSize: 15,
+    fontWeight: "bold"
   }
 });
 

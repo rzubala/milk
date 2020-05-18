@@ -17,6 +17,10 @@ import FeedingDayScreen, {
   screenOptions as FeedingDayScreenOptions,
 } from "../screen/FeedingDayOverview";
 
+import FeedingEditScreen, {
+  screenOptions as FeedingEditScreenOptions,
+} from "../screen/FeedingEdit";
+
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
     backgroundColor: Platform.OS === "android" ? "white" : "",
