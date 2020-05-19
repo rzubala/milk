@@ -11,6 +11,10 @@ export const addFeeding = (feeding: Feeding) => {
   return {type: ADD_FEEDING, data: feeding}
 }
 
+export const deleteFeeding = (id: string) => {
+  return {type: DELETE_FEEDING, data: id}
+}
+
 export const updateFeeding = (feeding: Feeding) => {
   return {type: UPDATE_FEEDING, data: feeding}
 }

@@ -11,7 +11,6 @@ export default (state = initialState, action) => {
             return {
                 ...state,
                 feeding: action.data,
-                rawFeeding: action.rawData
             }
         }
         case ADD_FEEDING: {
@@ -19,7 +18,7 @@ export default (state = initialState, action) => {
             const rawFeeding: Feeding[] = state.feeding
             return {
                 ...state,
-                rawFeeding: rawFeeding.concat(newFeeding)
+                feeding: rawFeeding.concat(newFeeding)
             }
         }
         case UPDATE_FEEDING: {
@@ -30,13 +29,13 @@ export default (state = initialState, action) => {
             updatedRawFeeding[index] = updatedFeeding
             return {
                 ...state,
-                rawFeeding: updatedRawFeeding
+                feeding: updatedRawFeeding
             }
         }
         case DELETE_FEEDING: {
             return {
                 ...state,
-                rawFeeding: state.feeding.filter((item: Feeding) => item.id !== action.data.id)
+                feeding: state.feeding.filter((item: Feeding) => item.id !== action.data)
             }
         }
     }

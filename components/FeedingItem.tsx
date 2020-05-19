@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
     height: '100%'
   },
   date: {
-    fontSize: 12
+    fontSize: 15
   },
   volume: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: "bold"
   }
 });

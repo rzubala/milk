@@ -12,22 +12,27 @@ import { Ionicons } from "@expo/vector-icons";
 import i18n from "../constants/strings";
 
 import FeedingItem from "../components/FeedingItem";
-import Feeding from '../domain/feeding'
-import * as feedingUtils from '../utils/milk'
+import Feeding from "../domain/feeding";
+import * as feedingUtils from "../utils/milk";
 
 const FeedingDayOverview = (props) => {
   const timestamp = props.route.params.timestamp;
-  const dailyFeeding = useSelector(state => feedingUtils.fetchFeedingDay(state.milk.feeding, timestamp));
+  const dailyFeeding = useSelector((state) =>
+    feedingUtils.fetchFeedingDay(state.milk.feeding, timestamp)
+  );
 
   useEffect(() => {
     props.navigation.setOptions({
-      headerTitle: i18n.t("DailyFeeding") + " " + new Date(timestamp).toISOString().slice(0, 10),
-    })
-  }, [timestamp])
+      headerTitle:
+        i18n.t("DailyFeeding") +
+        " " +
+        new Date(timestamp).toISOString().slice(0, 10),
+    });
+  }, [timestamp]);
 
   const onItemSelected = (item: Feeding) => {
     props.navigation.navigate("FeedingEdit", {
-      id: item.id
+      item: item.id,
     });
   };
 
@@ -46,9 +51,9 @@ const FeedingDayOverview = (props) => {
         data={dailyFeeding}
         renderItem={(itemData) => {
           const time =
-            itemData.item.date.getHours() +
+            feedingUtils.zeroPad(itemData.item.date.getHours(), 2) +
             ":" +
-            itemData.item.date.getMinutes();
+            feedingUtils.zeroPad(itemData.item.date.getMinutes(), 2);
           return (
             <FeedingItem
               date={time}

@@ -42,3 +42,5 @@ export const groupPerDay = (data: Feeding[]) => {
     });
   return result;
 };
+
+export const zeroPad = (num, places) => String(num).padStart(places, '0')

@@ -17,9 +17,7 @@ import FeedingDayScreen, {
   screenOptions as FeedingDayScreenOptions,
 } from "../screen/FeedingDayOverview";
 
-import FeedingEditScreen, {
-  screenOptions as FeedingEditScreenOptions,
-} from "../screen/FeedingEdit";
+import FeedingEditScreen from "../screen/FeedingEdit";
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
@@ -52,7 +50,6 @@ export const MilkNavigator = () => {
       <MilkNavigatorStack.Screen
         name="FeedingEdit"
         component={FeedingEditScreen}
-        options={FeedingEditScreenOptions}
       />
     </MilkNavigatorStack.Navigator>
   );
