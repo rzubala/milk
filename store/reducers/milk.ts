@@ -1,27 +1,42 @@
 import Feeding from '../../domain/feeding'
-import {FETCH_FEEDING, FETCH_FEEDING_DAY, ActionData} from '../actions/milk'
+import {SET_FEEDING, ADD_FEEDING, UPDATE_FEEDING, DELETE_FEEDING} from '../actions/milk'
 
 const initialState = {
-    feeding: [],
-    rawFeeding: [],
-    dailyFeeding: {}
+    feeding: []
 }
 
 export default (state = initialState, action) => {
     switch(action.type) {
-        case FETCH_FEEDING: {
+        case SET_FEEDING: {
             return {
                 ...state,
                 feeding: action.data,
                 rawFeeding: action.rawData
             }
         }
-        case FETCH_FEEDING_DAY: {
-            const modifiedDailyFeeding = {...state.dailyFeeding}
-            modifiedDailyFeeding[action.date] = action.data
+        case ADD_FEEDING: {
+            const newFeeding = new Feeding(action.data.id, action.data.date, action.data.volume)
+            const rawFeeding: Feeding[] = state.feeding
             return {
                 ...state,
-                dailyFeeding: modifiedDailyFeeding
+                rawFeeding: rawFeeding.concat(newFeeding)
+            }
+        }
+        case UPDATE_FEEDING: {
+            const rawFeeding: Feeding[] = state.feeding
+            const index = rawFeeding.findIndex((item: Feeding) => item.id === action.data.id)
+            const updatedFeeding = new Feeding(action.data.id, action.data.date, action.data.volume)
+            const updatedRawFeeding: Feeding[] = [...rawFeeding]
+            updatedRawFeeding[index] = updatedFeeding
+            return {
+                ...state,
+                rawFeeding: updatedRawFeeding
+            }
+        }
+        case DELETE_FEEDING: {
+            return {
+                ...state,
+                rawFeeding: state.feeding.filter((item: Feeding) => item.id !== action.data.id)
             }
         }
     }

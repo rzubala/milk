@@ -13,27 +13,17 @@ import i18n from "../constants/strings";
 
 import FeedingItem from "../components/FeedingItem";
 import Feeding from '../domain/feeding'
-import * as feedingActions from "../store/actions/milk";
+import * as feedingUtils from '../utils/milk'
 
 const FeedingDayOverview = (props) => {
-  const dailyFeeding = useSelector((state) => state.milk.dailyFeeding[props.date]);
-
-  const dispatch = useDispatch();
-
-  const date = props.route.params.date;
-  const loadDailyFeeding = useCallback(() => {
-    dispatch(feedingActions.fetchFeedingDay(date));
-  }, [dispatch, date]);
-
-  useEffect(() => {
-    loadDailyFeeding();
-  }, [loadDailyFeeding]);
+  const timestamp = props.route.params.timestamp;
+  const dailyFeeding = useSelector(state => feedingUtils.fetchFeedingDay(state.milk.feeding, timestamp));
 
   useEffect(() => {
     props.navigation.setOptions({
-      headerTitle: i18n.t("DailyFeeding") + " " + new Date(date).toISOString().slice(0, 10),
+      headerTitle: i18n.t("DailyFeeding") + " " + new Date(timestamp).toISOString().slice(0, 10),
     })
-  }, [date])
+  }, [timestamp])
 
   const onItemSelected = (item: Feeding) => {
     props.navigation.navigate("FeedingEdit", {
