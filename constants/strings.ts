@@ -6,6 +6,8 @@ const en = {
     DailyFeeding: 'Daily feeding',
     EditFeeding: 'Edit feeding',
     AddFeeding: 'Add feeding',
+    MilkVolume: 'Milk volume [ml]',
+    Time: 'Date and time',
 }
 
 const pl = {
@@ -14,6 +16,8 @@ const pl = {
     DailyFeeding: 'Dzienne karmienie',
     EditFeeding: 'Edytuj karmienie',
     AddFeeding: 'Dodaj karmienie',
+    MilkVolume: 'Objętość mleka [ml]',
+    Time: 'Data i godzina',
 }
 
 i18n.translations["en"] = en;
