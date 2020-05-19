@@ -4,6 +4,9 @@ import { View, Text, StyleSheet, FlatList, Platform, TouchableNativeFeedback, To
 import { Colors } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import i18n from "../constants/strings";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+
+import HeaderButton from "../components/UI/HeaderButton";
 
 import Feeding from "../domain/feeding";
 import FeedingItem from "../components/FeedingItem";
@@ -28,6 +31,27 @@ const FeedingOverview = (props) => {
     loadFeeding();
   }, [loadFeeding]);
 
+  const onAdd = useCallback(() => {
+      props.navigation.navigate("FeedingEdit")
+  }, []);
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Add"
+            iconName={
+              Platform.OS === "android" ? "md-add" : "ios-add"
+            }
+            onPress={onAdd}
+            color={Colors.accent}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [onAdd]);
+
   const onItemSelected = (date: Date) => {
     props.navigation.navigate("FeedingDayOverview", {
       timestamp: date.getTime()
@@ -51,9 +75,6 @@ const FeedingOverview = (props) => {
           );
         }}
       />
-      <TouchableComponent onPress={() => alert('FAB clicked')} style={styles.fab}>
-          <Text style={styles.fabIcon}>+</Text>
-      </TouchableComponent>
     </View>
   );
 };
@@ -61,23 +82,7 @@ const FeedingOverview = (props) => {
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-  },
-  fab: {
-    position: 'absolute',
-    width: 56,
-    height: 56,
-    alignItems: 'center',
-    justifyContent: 'center',
-    right: 20,
-    bottom: 20,
-    backgroundColor: Colors.accent,
-    borderRadius: 30,
-    elevation: 8
-  },
-  fabIcon: {
-    fontSize: 40,
-    color: 'white'
-  }  
+  }
 });
 
 export const screenOptions = () => {
