@@ -9,10 +9,10 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "splash": {
-      "image": "./assets/splash.png",
+   "splash": {
+      "image": "./assets/bottle.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#63c2de"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
