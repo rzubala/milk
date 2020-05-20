@@ -87,9 +87,10 @@ export const fetchFeeding = () => {
           new Feeding(key, new Date(resData[key].timestamp), resData[key].volume)
         );
       }
+      const sortedFeeding = [...loadedFeeding].sort(item => item.date.getTime())
       dispatch({
         type: SET_FEEDING,
-        data: loadedFeeding,
+        data: sortedFeeding,
       });
     } catch (err) {
       throw err;

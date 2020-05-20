@@ -26,7 +26,7 @@ const FeedingDayOverview = (props) => {
       headerTitle:
         i18n.t("DailyFeeding") +
         " " +
-        new Date(timestamp).toISOString().slice(0, 10),
+        new Date(timestamp).toISOString().slice(5, 10),
     });
   }, [timestamp]);
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { View, Text, StyleSheet, FlatList, Platform, TouchableNativeFeedback, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, FlatList, Platform, TouchableNativeFeedback, TouchableOpacity, ActivityIndicator } from "react-native";
 import { Colors } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
 import i18n from "../constants/strings";
@@ -57,6 +57,14 @@ const FeedingOverview = (props) => {
       timestamp: date.getTime()
     });
   };
+
+  if (!feeding || feeding.length === 0) {
+    return (
+      <View style={{ ...styles.screen, justifyContent: "center" }}>
+        <ActivityIndicator size="large" color={Colors.primary} />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.screen}>
