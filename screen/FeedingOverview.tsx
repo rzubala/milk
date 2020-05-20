@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
 
 export const screenOptions = () => {
   return {
-    headerTitle: i18n.t("Feeding"),
+    headerTitle: i18n.t("FeedingPL"),
   };
 };
 

@@ -3,6 +3,7 @@ import i18n from "i18n-js";
 const en = {
     Milk: 'Milk',
     Feeding: 'Feeding',
+    FeedingPL: 'Feeding',
     DailyFeeding: 'Daily feeding',
     EditFeeding: 'Edit feeding',
     AddFeeding: 'Add feeding',
@@ -13,7 +14,8 @@ const en = {
 const pl = {
     Milk: 'Mleko',
     Feeding: 'Karmienie',
-    DailyFeeding: 'Dzienne karmienie',
+    FeedingPL: 'Karmienia',
+    DailyFeeding: 'Dobowe karmienia',
     EditFeeding: 'Edytuj karmienie',
     AddFeeding: 'Dodaj karmienie',
     MilkVolume: 'Objętość mleka [ml]',
