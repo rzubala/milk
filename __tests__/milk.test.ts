@@ -16,9 +16,9 @@ test('sort', () => {
     const date = new Date(2020, 4, 9, 0, 0, 0)
     
     const sorted: Feeding[] = [
-        new Feeding("1", new Date(2020, 4, 9, 3, 24, 0), 60),
+        new Feeding("3", new Date(2020, 4, 9, 13, 55, 0), 80),            
         new Feeding("2", new Date(2020, 4, 9, 9, 12, 0), 70),
-        new Feeding("3", new Date(2020, 4, 9, 13, 55, 0), 80),                
+        new Feeding("1", new Date(2020, 4, 9, 3, 24, 0), 60), 
     ]
 
     expect(fetchFeedingDay(TEST_DATA, date.getTime())).toStrictEqual(sorted);

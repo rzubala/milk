@@ -15,9 +15,9 @@ export const fetchFeedingDay = (data: Feeding[], timestamp: number) => {
 
 export const sortFeeding = (i1: Feeding, i2: Feeding): number => {
   if (i1.date > i2.date) {
-    return 1
+    return -1
   }
-  return -1
+  return 1
 }
 
 export const groupPerDay = (data: Feeding[]) => {
@@ -36,7 +36,6 @@ export const groupPerDay = (data: Feeding[]) => {
 
   const result: Feeding[] = [];
   Array.from(sumMap.keys())
-    .sort()
     .forEach((element) => {
       const volume = sumMap.get(element);
       result.push(
@@ -47,7 +46,7 @@ export const groupPerDay = (data: Feeding[]) => {
         )
       );
     });
-  return result;
+  return result.sort(sortFeeding);
 };
 
 export const zeroPad = (num, places) => String(num).padStart(places, '0')
