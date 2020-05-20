@@ -20,6 +20,11 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "android": {
+      "package": "com.zubala.rafal.milk",
+      "versionCode": 1,
+      "permissions": []
+    },
     "ios": {
       "supportsTablet": true
     }
