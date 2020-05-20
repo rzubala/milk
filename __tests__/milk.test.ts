@@ -1,6 +1,6 @@
 import TEST_DATA from "../data/test_data";
 import Feeding from "../domain/feeding";
-import { groupPerDay } from '../utils/milk'
+import { groupPerDay, fetchFeedingDay } from '../utils/milk'
 
 test('groupByDay', () => {
     const date1 = new Date(2020, 4, 9, 0, 0, 0)
@@ -11,3 +11,15 @@ test('groupByDay', () => {
     ]
     expect(groupPerDay(TEST_DATA)).toStrictEqual(result);
 });
+
+test('sort', () => {
+    const date = new Date(2020, 4, 9, 0, 0, 0)
+    
+    const sorted: Feeding[] = [
+        new Feeding("1", new Date(2020, 4, 9, 3, 24, 0), 60),
+        new Feeding("2", new Date(2020, 4, 9, 9, 12, 0), 70),
+        new Feeding("3", new Date(2020, 4, 9, 13, 55, 0), 80),                
+    ]
+
+    expect(fetchFeedingDay(TEST_DATA, date.getTime())).toStrictEqual(sorted);
+})

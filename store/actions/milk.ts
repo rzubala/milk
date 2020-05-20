@@ -5,6 +5,7 @@ export const DELETE_FEEDING = "DELETE_FEDDING";
 
 import { URL } from "../../constants/firebase";
 import Feeding from "../../domain/feeding";
+import { sortFeeding } from '../../utils/milk'
 
 export const addFeeding = (feeding: Feeding) => {
   return async (dispatch) => {
@@ -87,7 +88,7 @@ export const fetchFeeding = () => {
           new Feeding(key, new Date(resData[key].timestamp), resData[key].volume)
         );
       }
-      const sortedFeeding = [...loadedFeeding].sort(item => item.date.getTime())
+      const sortedFeeding = [...loadedFeeding].sort(sortFeeding)
       dispatch({
         type: SET_FEEDING,
         data: sortedFeeding,

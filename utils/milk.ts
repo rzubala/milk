@@ -9,9 +9,16 @@ export const fetchFeedingDay = (data: Feeding[], timestamp: number) => {
   const toDate = new Date(fromDate.getTime() + 24 * 60 * 60 * 1000);
   const filtered = data
     .filter((item) => item.date >= fromDate && item.date < toDate)
-    .sort(item => item.date.getTime());
+    .sort(sortFeeding);
   return filtered;
 };
+
+export const sortFeeding = (i1: Feeding, i2: Feeding): number => {
+  if (i1.date > i2.date) {
+    return 1
+  }
+  return -1
+}
 
 export const groupPerDay = (data: Feeding[]) => {
   const sumMap = new Map<number, number>();
