@@ -41,7 +41,7 @@ export const groupPerDay = (data: Feeding[]) => {
       result.push(
         new Feeding(
           element.toString(),
-          new Date(element),
+          new Date(element + 12 * 60 * 60 * 1000),
           volume === undefined ? 0 : volume
         )
       );
