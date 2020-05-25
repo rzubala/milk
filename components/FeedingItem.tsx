@@ -24,6 +24,7 @@ const FeedingItem = (props) => {
           <View style={styles.feedingRow}>
             <Text style={styles.date}>{props.date}</Text>
             <Text style={styles.volume}>{props.volume}</Text>
+            {props.count && <Text style={styles.count}>{props.count}</Text> }
           </View>
         </TouchableComponent>
       </View>
@@ -52,6 +53,10 @@ const styles = StyleSheet.create({
   volume: {
     fontSize: 18,
     fontWeight: "bold"
+  },
+  count: {
+    fontSize: 15,
+    color: Colors.accent
   }
 });
 
