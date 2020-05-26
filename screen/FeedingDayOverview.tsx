@@ -24,23 +24,41 @@ const FeedingDayOverview = (props) => {
   const dailyFeeding = useSelector((state) =>
     feedingUtils.fetchFeedingDay(state.milk.feeding, timestamp)
   );
-  const poo = useSelector((state) =>
+  const poo: Poo = useSelector((state) =>
     feedingUtils.getPoo(state.poo.poo, timestamp)
   );
-
+  const [pooCnt, setPooCnt] = useState(0);
+  const [loading, setLoading] = useState(false)
   const dispatch = useDispatch();
 
-  const onAddPoo = () => {
-    if (poo) {
-      dispatch(pooActions.updatePoo(poo, true));
-    } else {
-      dispatch(pooActions.addPoo(timestamp));
+  const onAddPoo = async () => {
+    try {
+      setLoading(true)
+      if (poo) {
+        await dispatch(pooActions.updatePoo(poo, true));
+        setPooCnt(poo.count + 1);
+      } else {
+        await dispatch(pooActions.addPoo(timestamp));
+        setPooCnt(1)
+      }      
+    } catch (err) {
+    } finally {
+      setLoading(false)
     }
   };
 
-  const onRemovePoo = () => {
-    if (poo) {
-      dispatch(pooActions.updatePoo(poo, false));
+  const onRemovePoo = async () => {
+    try {
+      setLoading(true)
+      if (poo) {
+        await dispatch(pooActions.updatePoo(poo, false));
+        if (poo.count > 0) {
+          setPooCnt(poo.count - 1);
+        }
+      }      
+    } catch (err) {
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -52,6 +70,12 @@ const FeedingDayOverview = (props) => {
         new Date(timestamp).toISOString().slice(5, 10),
     });
   }, [timestamp]);
+
+  useEffect(() => {
+    if (poo) {
+      setPooCnt(poo.count);
+    }
+  }, [poo]);
 
   const onItemSelected = (item: Feeding) => {
     props.navigation.navigate("FeedingEdit", {
@@ -78,16 +102,19 @@ const FeedingDayOverview = (props) => {
             onPress={onRemovePoo}
           />
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        {loading && <View style={{ justifyContent: "center", width: 40, height: 40 }}>
+        <ActivityIndicator size="small" color={Colors.primary} />
+      </View>}
+        {!loading && <View style={{ flexDirection: "row", alignItems: "center" }}>
           <Image
             source={require("../assets/diapers.png")}
             fadeDuration={0}
             style={{ width: 40, height: 40 }}
           />
           <View style={styles.pooLabelView}>
-            <Text style={styles.poo}>{poo?.count.toString() ?? "0"}</Text>
+            <Text style={styles.poo}>{pooCnt?.toString() ?? "0"}</Text>
           </View>
-        </View>
+        </View>}
         <View>
           <Ionicons
             name={Platform.OS === "android" ? "md-add" : "ios-add"}
@@ -133,17 +160,17 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
     margin: 5,
-    color: Colors.primary
+    color: Colors.primary,
   },
   pooLabelView: {
-      position: "absolute",
-      top: -10,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      justifyContent: "center",
-      alignItems: "center",
-  }
+    position: "absolute",
+    top: -10,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
 
 export const screenOptions = () => {
