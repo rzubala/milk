@@ -8,6 +8,8 @@ import {
   ActivityIndicator,
   Image,
   Platform,
+  TouchableNativeFeedback,
+  TouchableOpacity,
 } from "react-native";
 import { Colors } from "../constants/colors";
 import { Ionicons } from "@expo/vector-icons";
@@ -20,6 +22,11 @@ import * as feedingUtils from "../utils/milk";
 import * as pooActions from "../store/actions/poo";
 
 const FeedingDayOverview = (props) => {
+  const TouchableComponent: any =
+    Platform.OS === "android" && Platform.Version >= 21
+      ? TouchableNativeFeedback
+      : TouchableOpacity;
+
   const timestamp = props.route.params.timestamp;
   const dailyFeeding = useSelector((state) =>
     feedingUtils.fetchFeedingDay(state.milk.feeding, timestamp)
@@ -28,37 +35,37 @@ const FeedingDayOverview = (props) => {
     feedingUtils.getPoo(state.poo.poo, timestamp)
   );
   const [pooCnt, setPooCnt] = useState(0);
-  const [loading, setLoading] = useState(false)
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
 
   const onAddPoo = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       if (poo) {
         await dispatch(pooActions.updatePoo(poo, true));
         setPooCnt(poo.count + 1);
       } else {
         await dispatch(pooActions.addPoo(timestamp));
-        setPooCnt(1)
-      }      
+        setPooCnt(1);
+      }
     } catch (err) {
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
   const onRemovePoo = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       if (poo) {
         await dispatch(pooActions.updatePoo(poo, false));
         if (poo.count > 0) {
           setPooCnt(poo.count - 1);
         }
-      }      
+      }
     } catch (err) {
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   };
 
@@ -94,35 +101,37 @@ const FeedingDayOverview = (props) => {
   return (
     <View style={styles.screen}>
       <View style={styles.pooContainer}>
-        <View>
+        <TouchableComponent onPress={onRemovePoo} style={styles.touchButton}>
           <Ionicons
             name={Platform.OS === "android" ? "md-remove" : "ios-remove"}
             size={32}
             color={Colors.accent}
-            onPress={onRemovePoo}
           />
-        </View>
-        {loading && <View style={{ justifyContent: "center", width: 40, height: 40 }}>
-        <ActivityIndicator size="small" color={Colors.primary} />
-      </View>}
-        {!loading && <View style={{ flexDirection: "row", alignItems: "center" }}>
-          <Image
-            source={require("../assets/diapers.png")}
-            fadeDuration={0}
-            style={{ width: 40, height: 40 }}
-          />
-          <View style={styles.pooLabelView}>
-            <Text style={styles.poo}>{pooCnt?.toString() ?? "0"}</Text>
+        </TouchableComponent>
+        {loading && (
+          <View style={{ justifyContent: "center", width: 40, height: 40 }}>
+            <ActivityIndicator size="small" color={Colors.primary} />
           </View>
-        </View>}
-        <View>
+        )}
+        {!loading && (
+          <View style={{ flexDirection: "row", alignItems: "center" }}>
+            <Image
+              source={require("../assets/diapers.png")}
+              fadeDuration={0}
+              style={{ width: 40, height: 40 }}
+            />
+            <View style={styles.pooLabelView}>
+              <Text style={styles.poo}>{pooCnt?.toString() ?? "0"}</Text>
+            </View>
+          </View>
+        )}
+        <TouchableComponent onPress={onAddPoo} style={styles.touchButton}>
           <Ionicons
             name={Platform.OS === "android" ? "md-add" : "ios-add"}
             size={32}
             color={Colors.accent}
-            onPress={onAddPoo}
           />
-        </View>
+        </TouchableComponent>
       </View>
       <FlatList
         keyExtractor={(item) => item.id}
@@ -170,6 +179,13 @@ const styles = StyleSheet.create({
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
+  },
+  touchButton: {
+    borderColor: "black",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 80,
+    height: 60,
   },
 });
 

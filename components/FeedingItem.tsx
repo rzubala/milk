@@ -38,7 +38,6 @@ const styles = StyleSheet.create({
     height: 70,
   },
   touchable: {
-    borderRadius: 10,
     overflow: "hidden"
   },
   feedingRow: {
