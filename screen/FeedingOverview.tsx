@@ -6,11 +6,13 @@ import {
   FlatList,
   Platform,
   Button,
+  Alert,
   ActivityIndicator,
 } from "react-native";
 import { Colors } from "../constants/colors";
 import i18n from "../constants/strings";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import NetInfo from '@react-native-community/netinfo';
 
 import HeaderButton from "../components/UI/HeaderButton";
 
@@ -22,6 +24,7 @@ import * as pooActions from "../store/actions/poo";
 import * as feedingUtils from "../utils/milk";
 
 const FeedingOverview = (props) => {
+  const [networkAlert, setNetworkAlert] = useState(false)
   const feeding = useSelector((state) =>
     feedingUtils.groupPerDay(state.milk.feeding)
   );
@@ -29,6 +32,22 @@ const FeedingOverview = (props) => {
   const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const unsubscribe = NetInfo.addEventListener(state => {
+      if (!state.isConnected) {
+        if (!networkAlert) {
+          Alert.alert(i18n.t("NetworkError"), i18n.t("CheckNetwork"), [
+            { text: "OK" },
+          ]);
+          setNetworkAlert(true)
+        }
+      } else {
+        setNetworkAlert(false)
+      }
+    });    
+    return unsubscribe
+  }, [])
 
   const loadData = useCallback(async () => {
     try {
@@ -92,13 +111,6 @@ const FeedingOverview = (props) => {
         }}
       >
         <ActivityIndicator size="large" color={Colors.primary} />
-        {!loading && <View style={{ width: "50%", marginTop: 40 }}>
-          <Button
-            title={i18n.t("TryAgain")}
-            onPress={loadData}
-            color={Colors.accent}
-          />
-        </View>}
       </View>
     );
   }

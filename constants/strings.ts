@@ -10,7 +10,9 @@ const en = {
     MilkVolume: 'Milk volume [ml]',
     Time: 'Date and time',
     TryAgain: 'Try again',
-    Poo: 'Poo'
+    Poo: 'Poo',
+    NetworkError: 'Network error',
+    CheckNetwork: 'Please turn on the internet',
 }
 
 const pl = {
@@ -23,7 +25,9 @@ const pl = {
     MilkVolume: 'Objętość mleka [ml]',
     Time: 'Data i godzina',
     TryAgain: 'Spróbuj ponownie',
-    Poo: 'Kupki'
+    Poo: 'Kupki',
+    NetworkError: 'Brak dostępu do internetu',
+    CheckNetwork: 'Proszę włączyć internet',
 }
 
 i18n.translations["en"] = en;
