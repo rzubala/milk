@@ -25,6 +25,7 @@ import * as feedingUtils from "../utils/milk";
 
 const FeedingOverview = (props) => {
   const [networkAlert, setNetworkAlert] = useState(false)
+  const [retryFetch, setRetryFetch] = useState(false)
   const feeding = useSelector((state) =>
     feedingUtils.groupPerDay(state.milk.feeding)
   );
@@ -44,6 +45,10 @@ const FeedingOverview = (props) => {
         }
       } else {
         setNetworkAlert(false)
+        if (retryFetch) {
+          setRetryFetch(false)
+          loadData()          
+        }
       }
     });    
     return unsubscribe
@@ -54,7 +59,9 @@ const FeedingOverview = (props) => {
       setLoading(true)
       await dispatch(feedingActions.fetchFeeding());
       await dispatch(pooActions.fetchPoo());
+      setRetryFetch(false)
     } catch (err) {      
+      setRetryFetch(true)
     } finally {
       setLoading(false)
     }
