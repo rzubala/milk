@@ -23,8 +23,22 @@ const FeedingItem = (props) => {
       <View style={styles.touchable}>
         <TouchableComponent onPress={props.onSelect} useForeground>
           <View style={styles.feedingRow}>
-            <Text style={styles.date}>{props.date}</Text>
-            <View style={styles.imageContainer}>
+            <View style={{flex : 1, alignItems: 'center'}}>
+              {props.max && <Image
+                    source={require("../assets/crown.png")}
+                    fadeDuration={0}
+                    style={styles.crown}
+                />}
+                {props.maxSilver && <Image
+                    source={require("../assets/crown_silver.png")}
+                    fadeDuration={0}
+                    style={styles.crown}
+                />}
+            </View>
+            <View style={{flex: 2, alignItems: 'center'}}>
+              <Text style={styles.date}>{props.date}</Text>            
+            </View>
+            <View style={{flex: 2, justifyContent: 'center', ...styles.imageContainer}}>
               <Image
                   source={require("../assets/icon.png")}
                   fadeDuration={0}
@@ -33,7 +47,7 @@ const FeedingItem = (props) => {
               <Text style={styles.volume}>{props.volume}</Text>
             </View>
             {props.count && (
-              <View style={styles.imageContainer}>
+              <View style={{flex: 2, justifyContent: 'center', ...styles.imageContainer}}>
                 <Image
                   source={require("../assets/diapers.png")}
                   fadeDuration={0}
@@ -60,8 +74,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   feedingRow: {
-    flexDirection: "row",
-    justifyContent: "space-evenly",
+    flexDirection: "row",    
     alignItems: "center",
     height: "100%",
   },
@@ -81,10 +94,14 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   diapers: {
-    width: 40, 
+    width: 35, 
     height: 40
   },
   bottle: {
+    width: 35, 
+    height: 40
+  },
+  crown: {
     width: 40, 
     height: 40
   },

@@ -82,12 +82,11 @@ export const fetchFeeding = () => {
       }
       const resData = await response.json();
       const loadedFeeding: Feeding[] = [];
-
       for (const key in resData) {
-        loadedFeeding.push(
-          new Feeding(key, new Date(resData[key].timestamp), resData[key].volume)
-        );
+        const feeding = new Feeding(key, new Date(resData[key].timestamp), resData[key].volume)
+        loadedFeeding.push(feeding);
       }
+      loadedFeeding.reduce((previous, current) => previous.volume > current.volume ? previous : current)?.setMax()
       const sortedFeeding = [...loadedFeeding].sort(sortFeeding)
       dispatch({
         type: SET_FEEDING,

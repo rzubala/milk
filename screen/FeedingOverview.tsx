@@ -132,6 +132,8 @@ const FeedingOverview = (props) => {
             <FeedingItem
               date={itemData.item.date.toISOString().slice(0, 10)}
               volume={itemData.item.volume}
+              max={itemData.item.sumMax}
+              maxSilver={itemData.item.max && !itemData.item.sumMax}
               count={
                 feedingUtils
                   .getPoo(poo, itemData.item.date.getTime())

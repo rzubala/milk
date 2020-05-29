@@ -146,6 +146,7 @@ const FeedingDayOverview = (props) => {
               date={time}
               volume={itemData.item.volume}
               onSelect={() => onItemSelected(itemData.item)}
+              max={itemData.item.max}
             />
           );
         }}
