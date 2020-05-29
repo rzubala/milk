@@ -35,10 +35,10 @@ const FeedingItem = (props) => {
                     style={styles.crown}
                 />}
             </View>
-            <View style={{flex: 2, alignItems: 'center'}}>
+            <View style={{flex: 2, alignItems: 'flex-start'}}>
               <Text style={styles.date}>{props.date}</Text>            
             </View>
-            <View style={{flex: 2, justifyContent: 'center', ...styles.imageContainer}}>
+            <View style={{flex: 2, justifyContent: 'flex-start', ...styles.imageContainer}}>
               <Image
                   source={require("../assets/icon.png")}
                   fadeDuration={0}
