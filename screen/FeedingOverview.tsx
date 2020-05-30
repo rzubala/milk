@@ -5,7 +5,6 @@ import {
   StyleSheet,
   FlatList,
   Platform,
-  Button,
   Alert,
   ActivityIndicator,
 } from "react-native";
@@ -25,12 +24,12 @@ import * as feedingUtils from "../utils/milk";
 
 const FeedingOverview = (props) => {
   const [networkAlert, setNetworkAlert] = useState(false)
-  const [retryFetch, setRetryFetch] = useState(false)
   const feeding = useSelector((state) =>
     feedingUtils.groupPerDay(state.milk.feeding)
   );
   const poo = useSelector((state) => state.poo.poo);
   const [loading, setLoading] = useState(false);
+  const [retry, setRetry] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -43,29 +42,31 @@ const FeedingOverview = (props) => {
           ]);
           setNetworkAlert(true)
         }
-      } else {
-        setNetworkAlert(false)
-        if (retryFetch) {
-          setRetryFetch(false)
+      } else {        
+        if (retry) {
+          setRetry(false)
           loadData()          
         }
+        setNetworkAlert(false)
       }
     });    
     return unsubscribe
-  }, [])
+  }, [retry, networkAlert])
 
   const loadData = useCallback(async () => {
-    try {
-      setLoading(true)
+    if (!(await NetInfo.fetch()).isConnected) {
+      setRetry(true)
+      return;
+    }
+    setLoading(true)
+    setRetry(false)
+    try {      
       await dispatch(feedingActions.fetchFeeding());
       await dispatch(pooActions.fetchPoo());
-      setRetryFetch(false)
-    } catch (err) {      
-      setRetryFetch(true)
+    } catch (err) {            
     } finally {
       setLoading(false)
     }
-
   }, [dispatch]);
 
   useEffect(() => {
@@ -108,7 +109,7 @@ const FeedingOverview = (props) => {
     });
   };
 
-  if (loading || !feeding || feeding.length === 0) {
+  if (loading) {
     return (
       <View
         style={{
