@@ -7,11 +7,12 @@ import {
   Platform,
   Alert,
   ActivityIndicator,
+  Share,
 } from "react-native";
 import { Colors } from "../constants/colors";
 import i18n from "../constants/strings";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import NetInfo from '@react-native-community/netinfo';
+import NetInfo from "@react-native-community/netinfo";
 
 import HeaderButton from "../components/UI/HeaderButton";
 
@@ -23,7 +24,7 @@ import * as pooActions from "../store/actions/poo";
 import * as feedingUtils from "../utils/milk";
 
 const FeedingOverview = (props) => {
-  const [networkAlert, setNetworkAlert] = useState(false)
+  const [networkAlert, setNetworkAlert] = useState(false);
   const feeding = useSelector((state) =>
     feedingUtils.groupPerDay(state.milk.feeding)
   );
@@ -34,38 +35,38 @@ const FeedingOverview = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
       if (!state.isConnected) {
         if (!networkAlert) {
           Alert.alert(i18n.t("NetworkError"), i18n.t("CheckNetwork"), [
             { text: "OK" },
           ]);
-          setNetworkAlert(true)
+          setNetworkAlert(true);
         }
-      } else {        
+      } else {
         if (retry) {
-          setRetry(false)
-          loadData()          
+          setRetry(false);
+          loadData();
         }
-        setNetworkAlert(false)
+        setNetworkAlert(false);
       }
-    });    
-    return unsubscribe
-  }, [retry, networkAlert])
+    });
+    return unsubscribe;
+  }, [retry, networkAlert]);
 
   const loadData = useCallback(async () => {
     if (!(await NetInfo.fetch()).isConnected) {
-      setRetry(true)
+      setRetry(true);
       return;
     }
-    setLoading(true)
-    setRetry(false)
-    try {      
+    setLoading(true);
+    setRetry(false);
+    try {
       await dispatch(feedingActions.fetchFeeding());
       await dispatch(pooActions.fetchPoo());
-    } catch (err) {            
+    } catch (err) {
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
   }, [dispatch]);
 
@@ -77,10 +78,40 @@ const FeedingOverview = (props) => {
     props.navigation.navigate("FeedingEdit");
   }, []);
 
+  const onShare = useCallback(async () => {
+    try {
+      const message = feeding
+        .map(
+          (f: Feeding) =>
+            `${f.date.toISOString().slice(0, 10)}\t${f.volume}\t${feedingUtils.getPoo(poo, f.date.getTime())?.count ?? 0}`
+        )
+        .join("\n");
+      const result = await Share.share({
+        message: message,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [feeding]);
+
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
         <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Share"
+            iconName={Platform.OS === "android" ? "md-share" : "ios-share"}
+            onPress={onShare}
+          />
           <Item
             title="Reload"
             iconName={Platform.OS === "android" ? "md-refresh" : "ios-refresh"}
@@ -96,7 +127,7 @@ const FeedingOverview = (props) => {
         </HeaderButtons>
       ),
     });
-  }, [onAdd]);
+  }, [onAdd, onShare, loadData]);
 
   const onItemSelected = (date: Date) => {
     let pooObj: Poo | undefined = feedingUtils.getPoo(poo, date.getTime());
