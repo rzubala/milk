@@ -1,13 +1,10 @@
-class Poo {
-    id: string
-    timestamp: number
-    count: number   
+import Base from './base'
 
+class Poo extends Base {
+    count: number
     constructor(id: string, timestamp: number, count: number ) {
-        this.id = id
-        this.timestamp = timestamp
+        super(id, timestamp)
         this.count = count
     }
 }
-
 export default Poo

@@ -17,7 +17,7 @@ import FeedingScreen, {
 
 import WeightScreen, {
   screenOptions as WeightScreenOptions
-} from '../screen/WeightOverview'
+} from '../screen/weight/WeightOverview'
 
 import FeedingDayScreen, {
   screenOptions as FeedingDayScreenOptions,

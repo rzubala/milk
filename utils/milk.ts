@@ -1,5 +1,6 @@
 import Feeding from "../domain/feeding";
 import Poo from "../domain/poo";
+import Base from "../domain/base";
 
 export const fetchFeedingDay = (data: Feeding[], timestamp: number) => {
   if (!data) {
@@ -29,7 +30,7 @@ export const sortFeeding = (i1: Feeding, i2: Feeding): number => {
   return 1;
 };
 
-export const sortPoo = (i1: Poo, i2: Poo): number => {
+export const sortBase = (i1: Base, i2: Base): number => {
   if (i1.timestamp > i2.timestamp) {
     return -1;
   }

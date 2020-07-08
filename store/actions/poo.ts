@@ -5,7 +5,7 @@ export const SET_POO = "SET_POO"
 
 import { URL } from "../../constants/firebase";
 import Poo from "../../domain/poo";
-import { normalizeTimestamp, sortPoo } from "../../utils/milk";
+import { normalizeTimestamp, sortBase } from "../../utils/milk";
 
 export const fetchPoo = () => {
   return async (dispatch) => {
@@ -24,7 +24,7 @@ export const fetchPoo = () => {
           new Poo(key, resData[key].timestamp, resData[key].count)
         );
       }
-      const sortedPoo = [...loadedPoo].sort(sortPoo)
+      const sortedPoo = [...loadedPoo].sort(sortBase)
       dispatch({
         type: SET_POO,
         data: sortedPoo,

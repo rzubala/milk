@@ -1,7 +1,7 @@
 import React from 'react'
 import {View, Text} from 'react-native'
-import { Colors } from "../constants/colors";
-import i18n from "../constants/strings";
+import { Colors } from "../../constants/colors";
+import i18n from "../../constants/strings";
 
 const WeightOverview = props => {
     return (
