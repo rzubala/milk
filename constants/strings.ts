@@ -13,6 +13,7 @@ const en = {
     Poo: 'Poo',
     NetworkError: 'Network error',
     CheckNetwork: 'Please turn on the internet',
+    Weight: 'Weight'
 }
 
 const pl = {
@@ -28,6 +29,7 @@ const pl = {
     Poo: 'Kupki',
     NetworkError: 'Brak dostępu do internetu',
     CheckNetwork: 'Proszę włączyć internet',
+    Weight: 'Waga'
 }
 
 i18n.translations["en"] = en;
