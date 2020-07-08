@@ -24,6 +24,7 @@ import FeedingDayScreen, {
 } from "../screen/FeedingDayOverview";
 
 import FeedingEditScreen from "../screen/FeedingEdit";
+import WeightEditScreen from "../screen/weight/WeightEdit";
 
 const defaultNavOptions: StackNavigationOptions = {
   headerStyle: {
@@ -69,6 +70,10 @@ const WeightNavigator = () => {
         name="WeightOverview"
         component={WeightScreen}
         options={WeightScreenOptions}
+      />
+      <WeightNavigatorStack.Screen
+        name="WeightEdit"
+        component={WeightEditScreen}
       />
     </WeightNavigatorStack.Navigator>
   )
