@@ -34,14 +34,16 @@ const DateTimePickerField = (props) => {
         <View style={styles.datetime}>
           <View style={props.inputContainerStyle}>
             <Text style={props.inputStyle} onPress={showDatepicker}>
-              {props.date.toISOString().slice(0, 10)}
+              {props.date ? props.date.toISOString().slice(0, 10) : ''}
             </Text>
           </View>
           <View style={props.inputContainerStyle}>
             <Text style={props.inputStyle} onPress={showTimepicker}>
-              {feedingUtils.zeroPad(props.date.getHours(), 2) +
+              {props.date ?
+              feedingUtils.zeroPad(props.date.getHours(), 2) +
                 ":" +
-                feedingUtils.zeroPad(props.date.getMinutes(), 2)}
+                feedingUtils.zeroPad(props.date.getMinutes(), 2)
+              : ''}
             </Text>
           </View>
         </View>
