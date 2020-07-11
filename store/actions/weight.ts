@@ -5,7 +5,7 @@ export const SET_WEIGHT = "SET_WEIGHT";
 
 import { URL } from "../../constants/firebase";
 import Weight from "../../domain/weight";
-import { normalizeTimestamp, sortBase } from "../../utils/milk";
+import { sortBase } from "../../utils/milk";
 
 export const fetchWeigths = () => {
   return async (dispatch) => {
@@ -52,6 +52,46 @@ export const addWeight = (ts: number, measurement: number) => {
     dispatch({
       type: ADD_WEIGHT,
       data: weight,
+    });
+  };
+};
+
+export const deleteWeight = (id: string) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      `${URL}weight/${id}.json`,
+      {
+        method: "DELETE"
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Something went wrong");
+    }
+    dispatch({ type: REMOVE_WEIGHT, data: id });
+  };  
+};
+
+export const updateWeight = (weight: Weight) => {
+  return async (dispatch) => {
+    const response = await fetch(
+      `${URL}weight/${weight.id}.json`,
+      {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          timestamp: weight.timestamp,
+          weight: weight.weight,
+        })
+      }
+    );
+    if (!response.ok) {
+      throw new Error("Something went wrong!");
+    }
+    dispatch({
+      type: UPDATE_WEIGHT,
+      data: weight
     });
   };
 };

@@ -29,10 +29,32 @@ export default (state = initialState, action) => {
         ...state,
         weights: weightArray.concat(newWeight),
       };
-    default: {
+    case UPDATE_WEIGHT:
+      const rawWeights: Weight[] = state.weights;
+      const index = rawWeights.findIndex(
+        (item: Weight) => item.id === action.data.id
+      );
+      const updatedWeight = new Weight(
+        action.data.id,
+        action.data.timestamp,
+        action.data.weight
+      );
+      const updatedRawWeights: Weight[] = [...rawWeights];
+      updatedRawWeights[index] = updatedWeight;
+      return {
+        ...state,
+        weights: updatedRawWeights,
+      };
+    case REMOVE_WEIGHT:
+      return {
+        ...state,
+        weights: state.weights.filter(
+          (item: Weight) => item.id !== action.data
+        ),
+      };
+    default:
       return {
         ...state,
       };
-    }
   }
 };

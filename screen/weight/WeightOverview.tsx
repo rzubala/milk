@@ -8,6 +8,7 @@ import WeightItem from '../../components/WeightItem'
 import i18n from "../../constants/strings";
 import HeaderButton from "../../components/UI/HeaderButton";
 import Weight from '../../domain/weight'
+import * as weightActions from "../../store/actions/weight";
 
 const WeightOverview = (props) => {
   const weights = useSelector(state => state.weight.weights)
@@ -30,6 +31,20 @@ const WeightOverview = (props) => {
       ),
     });
   }, [onAdd]);
+
+  const dispatch = useDispatch();
+
+  const loadData = useCallback(async () => {
+    try {
+      await dispatch(weightActions.fetchWeigths());
+    } catch (err) {
+    } finally {
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    loadData();
+  }, [loadData]);
 
   const onItemSelected = (weight: Weight) => {
     props.navigation.navigate("WeightEdit", {

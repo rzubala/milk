@@ -31,7 +31,7 @@ const WeightEdit = (props) => {
 
   const onDelete = useCallback(() => {
     try {
-      //dispatch(weightActions.deleteWeight(id));
+      dispatch(weightActions.deleteWeight(id));
       props.navigation.goBack();
     } catch (err) {
       console.log(err);
@@ -41,7 +41,7 @@ const WeightEdit = (props) => {
   const submitHandler = useCallback(() => {
     try {
       if (id) {
-        //dispatch(weightActions.updateWeight(new Weight(id, date, weight)));
+        dispatch(weightActions.updateWeight(new Weight(id, date.getTime(), parseFloat(weight))));
       } else {
         dispatch(weightActions.addWeight(date.getTime(), parseFloat(weight)));
       }
