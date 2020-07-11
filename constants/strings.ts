@@ -14,6 +14,7 @@ const en = {
     NetworkError: 'Network error',
     CheckNetwork: 'Please turn on the internet',
     Weight: 'Weight',
+    WeightKg: 'Weight [kg]',
     EditWeight: 'Edit weight',
     AddWeight: 'Add weight',
 }
@@ -32,6 +33,7 @@ const pl = {
     NetworkError: 'Brak dostępu do internetu',
     CheckNetwork: 'Proszę włączyć internet',
     Weight: 'Waga',
+    WeightKg: 'Waga [kg]',
     EditWeight: 'Edytuj wagę',
     AddWeight: 'Dodaj wagę',
 }

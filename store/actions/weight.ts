@@ -34,14 +34,13 @@ export const fetchWeigths = () => {
 
 export const addWeight = (ts: number, measurement: number) => {
   return async (dispatch) => {
-    const timestamp = normalizeTimestamp(ts);
     const response = await fetch(`${URL}weight.json`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        timestamp: timestamp,
+        timestamp: ts,
         weight: measurement,
       }),
     });
@@ -49,7 +48,7 @@ export const addWeight = (ts: number, measurement: number) => {
       throw new Error("Something went wrong!");
     }
     const resData = await response.json();
-    const weight = new Weight(resData.name, timestamp, measurement);
+    const weight = new Weight(resData.name, ts, measurement);
     dispatch({
       type: ADD_WEIGHT,
       data: weight,

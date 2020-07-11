@@ -8,7 +8,7 @@ import {
 import Weight from "../../domain/weight";
 
 const initialState = {
-  weight: [],
+  weights: [],
 };
 
 export default (state = initialState, action) => {
@@ -16,7 +16,7 @@ export default (state = initialState, action) => {
     case SET_WEIGHT:
       return {
         ...state,
-        weight: action.data,
+        weights: action.data,
       };
     case ADD_WEIGHT:
       const newWeight = new Weight(
@@ -24,10 +24,15 @@ export default (state = initialState, action) => {
         action.data.timestamp,
         action.data.weight
       );
-      const weightArray: Weight[] = state.weight;
+      const weightArray: Weight[] = state.weights;
       return {
         ...state,
-        weight: weightArray.concat(newWeight),
+        weights: weightArray.concat(newWeight),
       };
+    default: {
+      return {
+        ...state,
+      };
+    }
   }
 };

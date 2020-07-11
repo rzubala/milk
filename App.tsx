@@ -8,13 +8,15 @@ import i18n from './constants/strings';
 import AppNavigator from './navigator/AppNavigator'
 import milkReducer from './store/reducers/milk'
 import pooReducer from './store/reducers/poo'
+import weightReducer from './store/reducers/weight'
 
 i18n.locale = Localization.locale;
 i18n.fallbacks = true;
 
 const rootReducer = combineReducers({
   milk: milkReducer,
-  poo: pooReducer
+  poo: pooReducer,
+  weight: weightReducer
 })
 
 const store = createStore(rootReducer, applyMiddleware(ReduxThunk))
