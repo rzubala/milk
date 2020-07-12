@@ -17,6 +17,7 @@ const en = {
     WeightKg: 'Weight [kg]',
     EditWeight: 'Edit weight',
     AddWeight: 'Add weight',
+    Stats: 'Stats',
 }
 
 const pl = {
@@ -36,6 +37,7 @@ const pl = {
     WeightKg: 'Waga [kg]',
     EditWeight: 'Edytuj wagę',
     AddWeight: 'Dodaj wagę',
+    Stats: 'Statystyka',
 }
 
 i18n.translations["en"] = en;

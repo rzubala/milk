@@ -17,6 +17,10 @@ const WeightOverview = (props) => {
     props.navigation.navigate("WeightEdit");
   }, []);
 
+  const onStats = useCallback(() => {
+    props.navigation.navigate("WeightStats");
+  }, []);
+
   useEffect(() => {
     props.navigation.setOptions({
       headerRight: () => (
@@ -29,6 +33,16 @@ const WeightOverview = (props) => {
           />
         </HeaderButtons>
       ),
+      headerLeft: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Stats"
+            iconName={Platform.OS === "android" ? "md-bulb" : "ios-bulb"}
+            onPress={onStats}
+            color={Colors.accent}
+          />
+        </HeaderButtons>
+      )
     });
   }, [onAdd]);
 

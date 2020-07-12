@@ -19,6 +19,10 @@ import WeightScreen, {
   screenOptions as WeightScreenOptions
 } from '../screen/weight/WeightOverview'
 
+import WeightStatsScreen, {
+  screenOptions as WeightStatsScreenOptions
+} from '../screen/weight/WeightStats'
+
 import FeedingDayScreen, {
   screenOptions as FeedingDayScreenOptions,
 } from "../screen/FeedingDayOverview";
@@ -74,6 +78,11 @@ const WeightNavigator = () => {
       <WeightNavigatorStack.Screen
         name="WeightEdit"
         component={WeightEditScreen}
+      />
+      <WeightNavigatorStack.Screen
+        name="WeightStats"
+        component={WeightStatsScreen}
+        options={WeightStatsScreenOptions}
       />
     </WeightNavigatorStack.Navigator>
   )
