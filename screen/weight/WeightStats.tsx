@@ -1,6 +1,9 @@
-import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import React, {useCallback, useEffect} from "react";
+import { View, Text, StyleSheet, Share, Platform } from "react-native";
 import { useSelector } from "react-redux";
+
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderButton from "../../components/UI/HeaderButton";
 
 import { Colors } from "../../constants/colors";
 import i18n from "../../constants/strings";
@@ -14,6 +17,44 @@ const WeightStats = (props) => {
   const lastWeekData = getWeightAverage(weights, 7);
   const last2WeekData = getWeightAverage(weights, 14);
   const lastMonthData = getWeightAverage(weights, 30);
+
+  const onShare = useCallback(async () => {
+    try {
+      let message = i18n.t("StatsFrom") + '\n'
+      message += buildLastDays(lastData) + " " + lastData.average + '\n';
+      message += buildLastDays(lastWeekData) + " " + lastWeekData.average + '\n';
+      message += buildLastDays(last2WeekData) + " " + last2WeekData.average + '\n';
+      message += buildLastDays(lastMonthData) + " " + lastMonthData.average + '\n';
+      const result = await Share.share({
+        message: message,
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error) {
+      console.log(error.message);
+    }
+  }, [weights, lastData, lastWeekData, last2WeekData, lastMonthData]);
+
+  useEffect(() => {
+    props.navigation.setOptions({
+      headerRight: () => (
+        <HeaderButtons HeaderButtonComponent={HeaderButton}>
+          <Item
+            title="Share"
+            iconName={Platform.OS === "android" ? "md-share" : "ios-share"}
+            onPress={onShare}
+          />
+        </HeaderButtons>
+      ),
+    });
+  }, [onShare]);
 
   const buildLastDays = (data) => {
     return i18n.t("Last") + " " + data.days + " " + i18n.t("Days");
