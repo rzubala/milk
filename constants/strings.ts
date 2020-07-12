@@ -18,8 +18,8 @@ const en = {
     EditWeight: 'Edit weight',
     AddWeight: 'Add weight',
     Stats: 'Stats',
-    StatsFrom: 'Statictics since:',
-    Last: 'Last',
+    StatsFrom: 'Average daily increase from:',
+    Last: 'last',
     Days: 'days:',
 }
 
@@ -41,7 +41,7 @@ const pl = {
     EditWeight: 'Edytuj wagę',
     AddWeight: 'Dodaj wagę',
     Stats: 'Statystyka',
-    StatsFrom: 'Statystyka od:',
+    StatsFrom: 'Średni przyrost dobowy z:',
     Last: 'ostatnich',
     Days: 'dni:'
 }
