@@ -40,7 +40,8 @@ const pl = {
     WeightKg: 'Waga [kg]',
     EditWeight: 'Edytuj wagę',
     AddWeight: 'Dodaj wagę',
-    Stats: 'Statystyka od:',
+    Stats: 'Statystyka',
+    StatsFrom: 'Statystyka od:',
     Last: 'ostatnich',
     Days: 'dni:'
 }

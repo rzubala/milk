@@ -66,8 +66,7 @@ const styles = StyleSheet.create({
         padding: 20
     },
     header: {
-        fontSize: 19,
-        fontWeight: "bold"
+        fontSize: 20
     },
     rowContainer: {
         flexDirection: 'row',
