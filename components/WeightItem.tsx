@@ -24,7 +24,7 @@ const WeightItem = (props) => {
                     <Text style={styles.date}>{props.date}</Text>
                 </View>
                 <View style={{ flex: 2 }}>
-                    <Text style={{...styles.weight, textAlign: 'center'}}>{props.weight}</Text>
+                    <Text style={{...styles.weight, textAlign: 'center'}}>{props.weight + " kg"}</Text>
                 </View>
             </View>
         </TouchableComponent>
