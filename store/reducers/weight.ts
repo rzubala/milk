@@ -24,10 +24,11 @@ export default (state = initialState, action) => {
         action.data.timestamp,
         action.data.weight
       );
-      const weightArray: Weight[] = state.weights;
+      const weightArray: Weight[] = [...state.weights];
+      const updatedArray = weightArray.concat(newWeight)
       return {
         ...state,
-        weights: weightArray.concat(newWeight),
+        weights: updatedArray,
       };
     case UPDATE_WEIGHT:
       const rawWeights: Weight[] = state.weights;

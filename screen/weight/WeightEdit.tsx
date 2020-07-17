@@ -21,6 +21,7 @@ import Weight from "../../domain/weight";
 
 const WeightEdit = (props) => {
   const id: string = props.route.params ? props.route.params.id : null;
+  const lastWeight = props.route.params ? props.route.params.lastWeight : null;
   const weightObject: Weight = useSelector((state) =>
   id ? state.weight.weights.find((item) => item.id === id) : null
 );
@@ -55,6 +56,8 @@ const WeightEdit = (props) => {
     if (weightObject) {      
       setDate(new Date(weightObject.timestamp));
       setWeight(weightObject.weight.toFixed(2));
+    } else if (lastWeight) {
+      setWeight(lastWeight.toFixed(2));
     }
   }, [weightObject]);
 

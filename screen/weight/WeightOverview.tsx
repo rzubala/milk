@@ -15,7 +15,9 @@ const WeightOverview = (props) => {
   const [loading, setLoading] = useState(false);
 
   const onAdd = useCallback(() => {
-    props.navigation.navigate("WeightEdit");
+    props.navigation.navigate("WeightEdit", {
+      lastWeight: weights.length > 0 ? weights[0].weight : 0,
+    });
   }, []);
 
   const onStats = useCallback(() => {
@@ -69,11 +71,19 @@ const WeightOverview = (props) => {
     loadData();
   }, [loadData]);
 
+  useEffect(() => {
+    const unsubscribe = props.navigation.addListener("focus", loadData);
+    return () => {
+      unsubscribe();
+    };
+  }, [loadData]);
+
   const onItemSelected = (weight: Weight) => {
     props.navigation.navigate("WeightEdit", {
       id: weight.id,
       timestamp: weight.timestamp,
       weight: weight.weight,
+      lastWeight: weights.length > 0 ? weights[0].weight : 0,
     });
   };
 
