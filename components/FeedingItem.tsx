@@ -12,31 +12,42 @@ import {
 import { Colors } from "../constants/colors";
 import Card from "./UI/Card";
 
-const FeedingItem = (props) => {
+interface FeedingItemProps {
+  cardStyle?: object;
+  date: string;
+  onSelect: () => void;
+  sumMax?: boolean;
+  max: boolean;
+  maxSilver?: boolean;
+  volume: number;
+  count?: string;
+}
+
+const FeedingItem = ({cardStyle, onSelect, date, max, maxSilver, volume, count} : FeedingItemProps ) => {
   const TouchableComponent: any =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
 
   return (
-    <Card style={{ ...styles.feeding, ...props.style }}>
+    <Card style={{ ...styles.feeding, ...cardStyle }}>
       <View style={styles.touchable}>
-        <TouchableComponent onPress={props.onSelect} useForeground>
+        <TouchableComponent onPress={onSelect} useForeground>
           <View style={styles.feedingRow}>
             <View style={{flex : 1, alignItems: 'center'}}>
-              {props.max && <Image
+              {max && <Image
                     source={require("../assets/crown.png")}
                     fadeDuration={0}
                     style={styles.crown}
                 />}
-                {props.maxSilver && <Image
+                {maxSilver && <Image
                     source={require("../assets/crown_silver.png")}
                     fadeDuration={0}
                     style={styles.crown}
                 />}
             </View>
             <View style={{flex: 2, alignItems: 'flex-start'}}>
-              <Text style={styles.date}>{props.date}</Text>            
+              <Text style={styles.date}>{date}</Text>            
             </View>
             <View style={{flex: 2, justifyContent: 'flex-start', ...styles.imageContainer}}>
               <Image
@@ -44,9 +55,9 @@ const FeedingItem = (props) => {
                   fadeDuration={0}
                   style={styles.bottle}
               />
-              <Text style={styles.volume}>{props.volume}</Text>
+              <Text style={styles.volume}>{volume}</Text>
             </View>
-            {props.count && (
+            {count && (
               <View style={{flex: 2, justifyContent: 'center', ...styles.imageContainer}}>
                 <Image
                   source={require("../assets/diapers.png")}
@@ -54,7 +65,7 @@ const FeedingItem = (props) => {
                   style={styles.diapers}
                 />
                 <View style={styles.countContainer}>
-                  <Text style={styles.count}>{props.count}</Text>
+                  <Text style={styles.count}>{count}</Text>
                 </View>
               </View>
             )}

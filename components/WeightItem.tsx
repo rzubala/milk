@@ -7,24 +7,30 @@ import {
   TouchableNativeFeedback,
   TouchableOpacity,
 } from "react-native";
-import { Colors } from "../constants/colors";
 import Card from "./UI/Card";
 
-const WeightItem = (props) => {
+interface WeightItemProps {
+  cardStyle?: object;
+  date: string;
+  weight: number;
+  onSelect: () => void;
+}
+
+const WeightItem = ({ cardStyle, date, weight, onSelect }: WeightItemProps) => {
   const TouchableComponent: any =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
   return (
-    <Card style={{ ...styles.weightItem, ...props.style }}>
+    <Card style={{ ...styles.weightItem, ...cardStyle }}>
       <View style={styles.touchable}>
-        <TouchableComponent onPress={props.onSelect} useForeground>
+        <TouchableComponent onPress={onSelect} useForeground>
             <View style={styles.weightRow}>
                 <View style={{ flex: 2, alignItems: "center" }}>
-                    <Text style={styles.date}>{props.date}</Text>
+                    <Text style={styles.date}>{date}</Text>
                 </View>
                 <View style={{ flex: 2 }}>
-                    <Text style={{...styles.weight, textAlign: 'center'}}>{props.weight.toFixed(2) + " kg"}</Text>
+                    <Text style={{...styles.weight, textAlign: 'center'}}>{weight.toFixed(2) + " kg"}</Text>
                 </View>
             </View>
         </TouchableComponent>
