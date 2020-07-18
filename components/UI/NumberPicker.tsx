@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import {
   View,
   Text,
@@ -9,8 +9,8 @@ import {
 } from "react-native";
 import { Colors } from "../../constants/colors";
 
-const VEL_MID = 0.5
-const VEL_HIGH = 1.0
+const VEL_MID = 0.9
+const VEL_HIGH = 1.7
 
 interface NumberPickerProps {
   pickerStyle?: object;
@@ -20,12 +20,14 @@ interface NumberPickerProps {
   stepMedium?: number;
   stepFast?: number;
   value: number;
+  onValueSelected: (value: number) => void
 }
 const NumberPicker = ({
   pickerStyle,
   min,
   max,
   value,
+  onValueSelected,
   step,
   stepMedium = 2,
   stepFast = 3
@@ -56,7 +58,9 @@ const NumberPicker = ({
   };
 
   const incrementNumber = (operation: (value: number, step: number) => number, step: number) => {
-    setNumber(operation(number, step));
+    const newNumber = operation(number, step)
+    setNumber(newNumber);
+    onValueSelected(newNumber);
   };
 
   const onPress = (event) => {
@@ -90,10 +94,13 @@ const NumberPicker = ({
     }
   };
 
+  useEffect(() => {
+    setNumber(value)
+  }, [value])
+
   return (
     <TouchableComponent
       style={{ ...styles.container, ...pickerStyle }}
-      //onPress={() => incrementNumber(dec)}
       onPressIn={onPress}
       onPressOut={onRelease}
     >
@@ -126,7 +133,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    padding: 5,
+    paddingVertical: 5,
+    paddingHorizontal: 15,
     margin: 5,
   },
   newNumber: {},

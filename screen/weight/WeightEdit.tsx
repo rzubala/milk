@@ -18,6 +18,7 @@ import i18n from "../../constants/strings";
 
 import * as weightActions from "../../store/actions/weight";
 import Weight from "../../domain/weight";
+import NumberPicker from "../../components/UI/NumberPicker";
 
 const WeightEdit = (props) => {
   const id: string = props.route.params ? props.route.params.id : null;
@@ -56,10 +57,10 @@ const WeightEdit = (props) => {
     if (weightObject) {      
       setDate(new Date(weightObject.timestamp));
       setWeight(weightObject.weight.toFixed(2));
-    } else if (lastWeight) {
+    } else if (lastWeight) {      
       setWeight(lastWeight.toFixed(2));
     }
-  }, [weightObject]);
+  }, [weightObject, lastWeight]);
 
   useEffect(() => {
     props.navigation.setOptions({
@@ -86,6 +87,20 @@ const WeightEdit = (props) => {
       ),
     });
   }, [id, onDelete, submitHandler]);
+
+  const getWeightValue = (index: number): number => {
+    try {
+      return parseInt(weight[index])
+    } catch (err) {
+      return 5
+    }
+  }
+
+  const setWeightValue = (value: number, index: number): void => {
+    try {
+      setWeight(weight.slice(0, index) + value + weight.slice(index+1))   
+    } catch (err) {}
+  }
 
   return (
     <KeyboardAvoidingView style={styles.screen} behavior="padding">
@@ -117,6 +132,14 @@ const WeightEdit = (props) => {
               }
             }}
           />
+          <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+            <NumberPicker value={getWeightValue(0)} onValueSelected={(value) => setWeightValue(value, 0)} min={0} max={9} step={1} />
+            <View style={{alignItems: "center", justifyContent: 'center'}}>
+              <Text style={{fontSize: 30}}>.</Text>
+            </View>
+            <NumberPicker value={getWeightValue(2)} onValueSelected={(value) => setWeightValue(value, 2)} min={0} max={9} step={1} />
+            <NumberPicker value={getWeightValue(3)} onValueSelected={(value) => setWeightValue(value, 3)} min={0} max={9} step={1} />
+          </View>  
         </View>
       </ScrollView>
     </KeyboardAvoidingView>

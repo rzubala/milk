@@ -18,7 +18,7 @@ const WeightOverview = (props) => {
     props.navigation.navigate("WeightEdit", {
       lastWeight: weights.length > 0 ? weights[0].weight : 0,
     });
-  }, []);
+  }, [weights]);
 
   const onStats = useCallback(() => {
     props.navigation.navigate("WeightStats");
