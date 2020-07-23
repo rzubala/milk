@@ -20,10 +20,11 @@ interface FeedingItemProps {
   max: boolean;
   maxSilver?: boolean;
   volume: number;
+  partialSum?: number;
   count?: string;
 }
 
-const FeedingItem = ({cardStyle, onSelect, date, max, maxSilver, volume, count} : FeedingItemProps ) => {
+const FeedingItem = ({cardStyle, onSelect, date, max, maxSilver, volume, count, partialSum} : FeedingItemProps ) => {
   const TouchableComponent: any =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
@@ -57,6 +58,13 @@ const FeedingItem = ({cardStyle, onSelect, date, max, maxSilver, volume, count} 
               />
               <Text style={styles.volume}>{volume}</Text>
             </View>
+            {partialSum && (
+              <View style={{flex: 1, justifyContent: 'flex-start', ...styles.imageContainer}}>
+                <View>
+                  <Text style={styles.partialSum}>{partialSum}</Text>
+                </View>
+              </View>
+            )}
             {count && (
               <View style={{flex: 2, justifyContent: 'center', ...styles.imageContainer}}>
                 <Image
@@ -91,6 +99,10 @@ const styles = StyleSheet.create({
   },
   date: {
     fontSize: 15,
+  },
+  partialSum: {
+    fontSize: 17,
+    color: Colors.inactiveDark
   },
   volume: {
     fontSize: 18,

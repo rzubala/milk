@@ -90,6 +90,13 @@ const FeedingDayOverview = (props) => {
     });
   };
 
+  const getPartialSum = (date: Date): number => {
+    if (!date) {
+      return 0
+    }
+    return dailyFeeding.filter(item => item.date.getTime() <= date.getTime()).map(item => item.volume).reduce((a, b) => a + b, 0)
+  }
+
   if (!dailyFeeding) {
     return (
       <View style={{ ...styles.screen, justifyContent: "center" }}>
@@ -145,6 +152,7 @@ const FeedingDayOverview = (props) => {
             <FeedingItem
               date={time}
               volume={itemData.item.volume}
+              partialSum={getPartialSum(itemData.item.date)}
               onSelect={() => onItemSelected(itemData.item)}
               max={itemData.item.max}
             />
