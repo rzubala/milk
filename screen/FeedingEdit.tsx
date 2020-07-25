@@ -19,6 +19,7 @@ import Feeding from "../domain/feeding";
 import i18n from "../constants/strings";
 import { Colors } from "../constants/colors";
 import NumberPicker from "../components/UI/NumberPicker";
+import NumberPickerScroll from '../components/UI/NumberPickerScroll'
 
 const FeedingEdit = (props) => {
   const id: string = props.route.params ? props.route.params.item : null;
@@ -131,11 +132,16 @@ const FeedingEdit = (props) => {
               }
             }}
           />
-          <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+          {/* <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
             <NumberPicker value={getVolumeValue(0)} onValueSelected={(value) => setVolumeValue(value, 0)} min={0} max={2} step={1} />
             <NumberPicker value={getVolumeValue(1)} onValueSelected={(value) => setVolumeValue(value, 1)} min={0} max={9} step={1} />
             <NumberPicker value={getVolumeValue(2)} onValueSelected={(value) => setVolumeValue(value, 2)} min={0} max={9} step={5} />
-          </View> 
+          </View>  */}
+          <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
+            <NumberPickerScroll value={getVolumeValue(0)} onValueSelected={(value) => setVolumeValue(value, 0)} min={0} max={2} step={1} />
+            <NumberPickerScroll value={getVolumeValue(1)} onValueSelected={(value) => setVolumeValue(value, 1)} min={0} max={9} step={1} />
+            <NumberPickerScroll value={getVolumeValue(2)} onValueSelected={(value) => setVolumeValue(value, 2)} min={0} max={9} step={5} />
+          </View>
         </View>
       </ScrollView>
     </KeyboardAvoidingView>
