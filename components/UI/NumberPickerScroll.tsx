@@ -1,4 +1,4 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useCallback, useState} from "react";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 import { Colors } from "../../constants/colors";
 
@@ -9,8 +9,6 @@ interface NumberPickerProps {
     min: number;
     max: number;
     step: number;
-    stepMedium?: number;
-    stepFast?: number;
     value: number;
     onValueSelected: (value: number) => void
   }
@@ -18,27 +16,40 @@ interface ItemData {
     id: number,
     value: string
 }
-const NumberPickerScroll = ({value, onValueSelected} : NumberPickerProps) => {
+const NumberPickerScroll = ({value, onValueSelected, min, max, step} : NumberPickerProps) => {
   const scrollRef = useRef(null)
+  const [mark, setMark] = useState(false)
 
-  const numbers = Array.from({ length: 10 }, (x, i) => i).map(n => { return {id: n, value: n.toString()}});
-  numbers.unshift({id: -2, value: ''})
-  numbers.unshift({id: -1, value: ''})
-  numbers.push({id: 11, value: ''})
-  numbers.push({id: 12, value: ''})
-  const items = numbers.map((n) => (
+  const buildNumbers = useCallback(() : ItemData[] => {
+    const length = Math.floor((max - min) / step) + 1
+    const numbers = Array.from({ length: length }, (x, i) => i).map(n => { 
+      const value = min + n * step;
+      return {id: value, value: value.toString()}
+    });
+    numbers.unshift({id: -2, value: ''})
+    numbers.unshift({id: -1, value: ''})
+    numbers.push({id: -3, value: ''})
+    numbers.push({id: -4, value: ''})
+    return numbers
+  }, [min, max, step])
+
+  const onScroll = (value) => {
+      onValueSelected(value * step)
+  }
+
+  const markValue = () => {
+    scrollRef.current?.scrollTo({x: 0, y: value * HEIGHT, animated: true})
+  }
+
+  useEffect(() => {
+    markValue()
+  }, [value])
+
+  const items = buildNumbers().map((n) => (
     <View style={styles.item} key={n.id}>
       <Text style={styles.itemText}>{n.value}</Text>
     </View>
   ));
-
-  const onScroll = (value) => {
-      onValueSelected(value)
-  }
-
-  useEffect(() => {
-    scrollRef.current?.scrollTo({x: 0, y: value * HEIGHT, animated: true})
-  }, [value])
 
   return (
     <View style={styles.container}>

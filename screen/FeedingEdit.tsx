@@ -140,7 +140,7 @@ const FeedingEdit = (props) => {
           <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
             <NumberPickerScroll value={getVolumeValue(0)} onValueSelected={(value) => setVolumeValue(value, 0)} min={0} max={2} step={1} />
             <NumberPickerScroll value={getVolumeValue(1)} onValueSelected={(value) => setVolumeValue(value, 1)} min={0} max={9} step={1} />
-            <NumberPickerScroll value={getVolumeValue(2)} onValueSelected={(value) => setVolumeValue(value, 2)} min={0} max={9} step={5} />
+            <NumberPickerScroll value={getVolumeValue(2)} onValueSelected={(value) => setVolumeValue(value, 2)} min={0} max={5} step={5} />
           </View>
         </View>
       </ScrollView>

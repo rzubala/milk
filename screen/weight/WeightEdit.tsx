@@ -18,7 +18,7 @@ import i18n from "../../constants/strings";
 
 import * as weightActions from "../../store/actions/weight";
 import Weight from "../../domain/weight";
-import NumberPicker from "../../components/UI/NumberPicker";
+import NumberPickerScroll from "../../components/UI/NumberPickerScroll";
 
 const WeightEdit = (props) => {
   const id: string = props.route.params ? props.route.params.id : null;
@@ -133,12 +133,12 @@ const WeightEdit = (props) => {
             }}
           />
           <View style={{flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center'}}>
-            <NumberPicker value={getWeightValue(0)} onValueSelected={(value) => setWeightValue(value, 0)} min={0} max={9} step={1} />
+            <NumberPickerScroll value={getWeightValue(0)} onValueSelected={(value) => setWeightValue(value, 0)} min={0} max={9} step={1} />
             <View style={{alignItems: "center", justifyContent: 'center'}}>
               <Text style={{fontSize: 30}}>.</Text>
             </View>
-            <NumberPicker value={getWeightValue(2)} onValueSelected={(value) => setWeightValue(value, 2)} min={0} max={9} step={1} />
-            <NumberPicker value={getWeightValue(3)} onValueSelected={(value) => setWeightValue(value, 3)} min={0} max={9} step={1} />
+            <NumberPickerScroll value={getWeightValue(2)} onValueSelected={(value) => setWeightValue(value, 2)} min={0} max={9} step={1} />
+            <NumberPickerScroll value={getWeightValue(3)} onValueSelected={(value) => setWeightValue(value, 3)} min={0} max={9} step={1} />
           </View>  
         </View>
       </ScrollView>
