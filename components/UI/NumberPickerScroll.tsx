@@ -18,7 +18,6 @@ interface ItemData {
 }
 const NumberPickerScroll = ({value, onValueSelected, min, max, step} : NumberPickerProps) => {
   const scrollRef = useRef(null)
-  const [mark, setMark] = useState(false)
 
   const buildNumbers = useCallback(() : ItemData[] => {
     const length = Math.floor((max - min) / step) + 1
