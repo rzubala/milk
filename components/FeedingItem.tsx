@@ -20,7 +20,7 @@ interface FeedingItemProps {
   max: boolean;
   maxSilver?: boolean;
   volume: number;
-  partialSum?: number;
+  partialSum?: string;
   count?: string;
 }
 

@@ -152,7 +152,7 @@ const FeedingDayOverview = (props) => {
             <FeedingItem
               date={time}
               volume={itemData.item.volume}
-              partialSum={getPartialSum(itemData.item.date)}
+              partialSum={getPartialSum(itemData.item.date).toFixed()}
               onSelect={() => onItemSelected(itemData.item)}
               max={itemData.item.max}
             />
