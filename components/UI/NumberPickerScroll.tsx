@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useCallback, useState} from "react";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
 import { Colors } from "../../constants/colors";
 
-const HEIGHT = 35
+const HEIGHT = 50
 
 interface NumberPickerProps {
     pickerStyle?: object;

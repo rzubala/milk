@@ -21,10 +21,21 @@ interface FeedingItemProps {
   maxSilver?: boolean;
   volume: number;
   partialSum?: string;
+  diff?: string;
   count?: string;
 }
 
-const FeedingItem = ({cardStyle, onSelect, date, max, maxSilver, volume, count, partialSum} : FeedingItemProps ) => {
+const FeedingItem = ({
+  cardStyle,
+  onSelect,
+  date,
+  max,
+  maxSilver,
+  volume,
+  count,
+  partialSum,
+  diff,
+}: FeedingItemProps) => {
   const TouchableComponent: any =
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
@@ -35,38 +46,73 @@ const FeedingItem = ({cardStyle, onSelect, date, max, maxSilver, volume, count, 
       <View style={styles.touchable}>
         <TouchableComponent onPress={onSelect} useForeground>
           <View style={styles.feedingRow}>
-            <View style={{flex : 1, alignItems: 'center'}}>
-              {max && <Image
-                    source={require("../assets/crown.png")}
-                    fadeDuration={0}
-                    style={styles.crown}
-                />}
-                {maxSilver && <Image
-                    source={require("../assets/crown_silver.png")}
-                    fadeDuration={0}
-                    style={styles.crown}
-                />}
-            </View>
-            <View style={{flex: 2, alignItems: 'flex-start'}}>
-              <Text style={styles.date}>{date}</Text>            
-            </View>
-            <View style={{flex: 2, justifyContent: 'flex-start', ...styles.imageContainer}}>
-              <Image
-                  source={require("../assets/icon.png")}
+            <View style={{ flex: 1, alignItems: "center" }}>
+              {max && (
+                <Image
+                  source={require("../assets/crown.png")}
                   fadeDuration={0}
-                  style={styles.bottle}
+                  style={styles.crown}
+                />
+              )}
+              {maxSilver && (
+                <Image
+                  source={require("../assets/crown_silver.png")}
+                  fadeDuration={0}
+                  style={styles.crown}
+                />
+              )}
+            </View>
+            <View style={{ flex: 2, alignItems: "flex-start" }}>
+              <Text style={styles.date}>{date}</Text>
+            </View>
+            <View
+              style={{
+                flex: 2,
+                justifyContent: "flex-start",
+                ...styles.imageContainer,
+              }}
+            >
+              <Image
+                source={require("../assets/icon.png")}
+                fadeDuration={0}
+                style={styles.bottle}
               />
               <Text style={styles.volume}>{volume}</Text>
             </View>
+            {diff && (
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-start",
+                  ...styles.imageContainer,
+                }}
+              >
+                <View>
+                  <Text style={styles.diff}>{diff}</Text>
+                </View>
+              </View>
+            )}
             {partialSum && (
-              <View style={{flex: 1, justifyContent: 'flex-start', ...styles.imageContainer}}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: "flex-start",
+                  ...styles.imageContainer,
+                }}
+              >
                 <View>
                   <Text style={styles.partialSum}>{partialSum}</Text>
                 </View>
               </View>
             )}
             {count && (
-              <View style={{flex: 2, justifyContent: 'center', ...styles.imageContainer}}>
+              <View
+                style={{
+                  flex: 2,
+                  justifyContent: "center",
+                  ...styles.imageContainer,
+                }}
+              >
                 <Image
                   source={require("../assets/diapers.png")}
                   fadeDuration={0}
@@ -93,7 +139,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
   },
   feedingRow: {
-    flexDirection: "row",    
+    flexDirection: "row",
     alignItems: "center",
     height: "100%",
   },
@@ -102,7 +148,11 @@ const styles = StyleSheet.create({
   },
   partialSum: {
     fontSize: 17,
-    color: Colors.inactiveDark
+    color: Colors.inactiveDark,
+  },
+  diff: {
+    fontSize: 14,
+    color: Colors.inactiveDark,
   },
   volume: {
     fontSize: 18,
@@ -117,16 +167,16 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   diapers: {
-    width: 35, 
-    height: 40
+    width: 35,
+    height: 40,
   },
   bottle: {
-    width: 35, 
-    height: 40
+    width: 35,
+    height: 40,
   },
   crown: {
-    width: 40, 
-    height: 40
+    width: 40,
+    height: 40,
   },
   countContainer: {
     position: "absolute",

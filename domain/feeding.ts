@@ -2,6 +2,7 @@ class Feeding {
     id: string
     date: Date
     volume: number
+    diff?: number
     sumMax: boolean = false
     max: boolean = false
 
