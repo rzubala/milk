@@ -75,8 +75,21 @@ export const groupPerDay = (data: Feeding[]) => {
       )
       ?.setSumMax();
   }
-  return result.sort(sortFeeding);
+  const sorted = result.sort(sortFeeding);
+  calculateDiff(sorted);
+  return sorted
 };
+
+const calculateDiff = (feeding: Feeding[]) => {
+  for (const { index, feed } of feeding.map((feed, index) => ({ index, feed }))) {
+    if (index < feeding.length - 1) {
+      const diff = feed.volume - feeding[index + 1].volume;
+      feed.diff = diff
+    } else {
+      feed.diff = undefined;
+    }
+  }
+}
 
 export const normalizeTimestamp = (timestamp: number) => {
   const copiedDate = new Date(timestamp);

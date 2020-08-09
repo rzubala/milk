@@ -21,7 +21,7 @@ interface FeedingItemProps {
   maxSilver?: boolean;
   volume: number;
   partialSum?: string;
-  diff?: string;
+  diff?: number;
   count?: string;
 }
 
@@ -40,6 +40,17 @@ const FeedingItem = ({
     Platform.OS === "android" && Platform.Version >= 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
+
+
+
+    let diffCmp = null;
+    if (diff === undefined) {
+      diffCmp = <Text style={styles.diffP}></Text>
+    } else if (diff < 0){
+      diffCmp = <Text style={styles.diffN}>{Math.abs(diff)}</Text>
+    } else {
+      diffCmp = <Text style={styles.diffP}>{diff}</Text>
+    }
 
   return (
     <Card style={{ ...styles.feeding, ...cardStyle }}>
@@ -79,19 +90,17 @@ const FeedingItem = ({
               />
               <Text style={styles.volume}>{volume}</Text>
             </View>
-            {diff && (
-              <View
-                style={{
-                  flex: 1,
-                  justifyContent: "flex-start",
-                  ...styles.imageContainer,
-                }}
-              >
-                <View>
-                  <Text style={styles.diff}>{diff}</Text>
-                </View>
+            {diffCmp && <View
+              style={{
+                flex: 1,
+                justifyContent: "flex-start",
+                ...styles.imageContainer,
+              }}
+            >
+              <View>
+                {diffCmp}
               </View>
-            )}
+            </View>}
             {partialSum && (
               <View
                 style={{
@@ -150,9 +159,13 @@ const styles = StyleSheet.create({
     fontSize: 17,
     color: Colors.inactiveDark,
   },
-  diff: {
+  diffN: {
     fontSize: 14,
-    color: Colors.inactiveDark,
+    color: 'red',
+  },
+  diffP: {
+    fontSize: 14,
+    color: 'green',
   },
   volume: {
     fontSize: 18,
