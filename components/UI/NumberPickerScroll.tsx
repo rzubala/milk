@@ -58,9 +58,8 @@ const NumberPickerScroll = ({value, onValueSelected, min, max, step} : NumberPic
         showsVerticalScrollIndicator={false}
         snapToAlignment='start'
         decelerationRate="fast"
-        snapToInterval={HEIGHT}
-        
-        onMomentumScrollEnd={(event) => onScroll(Math.round(event.nativeEvent.contentOffset.y/35))}
+        snapToInterval={HEIGHT}        
+        onMomentumScrollEnd={(event) => onScroll(Math.round(event.nativeEvent.contentOffset.y/HEIGHT))}
       >
         {items}
       </ScrollView>
