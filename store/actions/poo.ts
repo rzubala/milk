@@ -6,12 +6,12 @@ export const SET_POO = "SET_POO"
 import { URL } from "../../constants/firebase";
 import Poo from "../../domain/poo";
 import { normalizeTimestamp, sortBase } from "../../utils/milk";
-import {login} from './auth'
+import {getToken} from './auth'
 
 export const fetchPoo = () => {
   return async (dispatch) => {
     try {
-      const token = await login()
+      const token = await getToken()
       const response = await fetch(
         `${URL}poo.json?auth=${token}`
       );
@@ -40,7 +40,7 @@ export const fetchPoo = () => {
 export const addPoo = (ts: number) => {    
   return async (dispatch) => {
     const timestamp = normalizeTimestamp(ts)  
-    const token = await login()
+    const token = await getToken()
     const response = await fetch(`${URL}poo.json?auth=${token}`, {
       method: "POST",
       headers: {
@@ -71,7 +71,7 @@ export const updatePoo = (poo: Poo, add: boolean) => {
     if (count < 0) {
       count = 0
     }
-    const token = await login()
+    const token = await getToken()
     const response = await fetch(`${URL}poo/${id}.json?auth=${token}`, {
       method: "PATCH",
       headers: {

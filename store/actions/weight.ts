@@ -6,12 +6,12 @@ export const SET_WEIGHT = "SET_WEIGHT";
 import { URL } from "../../constants/firebase";
 import Weight from "../../domain/weight";
 import { sortBase } from "../../utils/milk";
-import {login} from './auth'
+import {getToken} from './auth'
 
 export const fetchWeigths = () => {
   return async (dispatch) => {
     try {
-      const token = await login()
+      const token = await getToken()
       const response = await fetch(`${URL}weight.json?auth=${token}`);
       if (!response.ok) {
         throw new Error("something went wrong");
@@ -36,7 +36,7 @@ export const fetchWeigths = () => {
 
 export const addWeight = (ts: number, measurement: number) => {
   return async (dispatch) => {
-    const token = await login()
+    const token = await getToken()
     const response = await fetch(`${URL}weight.json?auth=${token}`, {
       method: "POST",
       headers: {
@@ -61,7 +61,7 @@ export const addWeight = (ts: number, measurement: number) => {
 
 export const deleteWeight = (id: string) => {
   return async (dispatch) => {
-    const token = await login()
+    const token = await getToken()
     const response = await fetch(
       `${URL}weight/${id}.json?auth=${token}`,
       {
@@ -77,7 +77,7 @@ export const deleteWeight = (id: string) => {
 
 export const updateWeight = (weight: Weight) => {
   return async (dispatch) => {
-    const token = await login()
+    const token = await getToken()
     const response = await fetch(
       `${URL}weight/${weight.id}.json?auth=${token}`,
       {
