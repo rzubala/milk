@@ -6,12 +6,11 @@ export const SET_POO = "SET_POO"
 import { URL } from "../../constants/firebase";
 import Poo from "../../domain/poo";
 import { normalizeTimestamp, sortBase } from "../../utils/milk";
-import {getToken} from './auth'
 
 export const fetchPoo = () => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     try {
-      const token = await getToken()
+      const token = getState().auth.token
       const response = await fetch(
         `${URL}poo.json?auth=${token}`
       );
@@ -38,9 +37,9 @@ export const fetchPoo = () => {
 };
 
 export const addPoo = (ts: number) => {    
-  return async (dispatch) => {
-    const timestamp = normalizeTimestamp(ts)  
-    const token = await getToken()
+  return async (dispatch, getState) => {
+    const timestamp = normalizeTimestamp(ts)      
+    const token = getState().auth.token
     const response = await fetch(`${URL}poo.json?auth=${token}`, {
       method: "POST",
       headers: {
@@ -64,14 +63,14 @@ export const addPoo = (ts: number) => {
 };
 
 export const updatePoo = (poo: Poo, add: boolean) => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     const id = poo.id;
     const timestamp = poo.timestamp;
     let count = poo.count + (add ? 1 : -1);
     if (count < 0) {
       count = 0
     }
-    const token = await getToken()
+    const token = getState().auth.token
     const response = await fetch(`${URL}poo/${id}.json?auth=${token}`, {
       method: "PATCH",
       headers: {

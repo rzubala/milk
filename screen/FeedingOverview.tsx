@@ -5,14 +5,12 @@ import {
   StyleSheet,
   FlatList,
   Platform,
-  Alert,
   ActivityIndicator,
   Share,
 } from "react-native";
 import { Colors } from "../constants/colors";
 import i18n from "../constants/strings";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import NetInfo from "@react-native-community/netinfo";
 
 import HeaderButton from "../components/UI/HeaderButton";
 
@@ -24,49 +22,18 @@ import * as pooActions from "../store/actions/poo";
 import * as feedingUtils from "../utils/milk";
 
 const FeedingOverview = (props) => {
-  const [networkAlert, setNetworkAlert] = useState(false);
+
   const feeding = useSelector((state) =>
     feedingUtils.groupPerDay(state.milk.feeding)
   );
   const poo = useSelector((state) => state.poo.poo);
-  const [loading, setLoading] = useState(false);
-  const [retry, setRetry] = useState(false);
-
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    const unsubscribe = NetInfo.addEventListener((state) => {
-      if (!state.isConnected) {
-        if (!networkAlert) {
-          Alert.alert(i18n.t("NetworkError"), i18n.t("CheckNetwork"), [
-            { text: "OK" },
-          ]);
-          setNetworkAlert(true);
-        }
-      } else {
-        if (retry) {
-          setRetry(false);
-          loadData();
-        }
-        setNetworkAlert(false);
-      }
-    });
-    return unsubscribe;
-  }, [retry, networkAlert]);
-
   const loadData = useCallback(async () => {
-    if (!(await NetInfo.fetch()).isConnected) {
-      setRetry(true);
-      return;
-    }
-    setLoading(true);
-    setRetry(false);
     try {
       await dispatch(feedingActions.fetchFeeding());
       await dispatch(pooActions.fetchPoo());
     } catch (err) {
-    } finally {
-      setLoading(false);
     }
   }, [dispatch]);
 
@@ -139,20 +106,6 @@ const FeedingOverview = (props) => {
       poo: pooObj,
     });
   };
-
-  if (loading) {
-    return (
-      <View
-        style={{
-          ...styles.screen,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ActivityIndicator size="large" color={Colors.primary} />
-      </View>
-    );
-  }
 
   return (
     <View style={styles.screen}>

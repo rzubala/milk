@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   ScrollView,
+  Alert
 } from "react-native";
 import DateTimePickerField from "../components/UI/DateTimePickerField";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -36,6 +37,7 @@ const FeedingEdit = (props) => {
       props.navigation.goBack();
     } catch (err) {
       console.log(err);
+      Alert.alert('Oops!', err)
     }
   }, [id, dispatch]);
 
@@ -49,6 +51,7 @@ const FeedingEdit = (props) => {
       props.navigation.goBack();
     } catch (err) {
       console.log(err);
+      Alert.alert('Oops!', err)
     }
   }, [id, date, volume, dispatch]);
 

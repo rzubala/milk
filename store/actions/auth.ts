@@ -2,7 +2,7 @@ import {EMAIL, PASSWORD, API_KEY} from '../../constants/firebase'
 
 export const LOGIN = "LOGIN";
 
-export const getToken = async () => {
+const getToken = async () => {
       const response = await fetch(
         `https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${API_KEY}`,
         {
@@ -20,6 +20,7 @@ export const getToken = async () => {
       if (!response.ok) {
         const errorResData = await response.json();
         const errorId = errorResData.error.message;
+        console.log('auth error', errorId)
         let message = "Something went wrong!";
         if (errorId === "EMAIL_NOT_FOUND") {
           message = "This email could not be found";
@@ -34,7 +35,11 @@ export const getToken = async () => {
 
   export const login = () => {
       return async dispatch => {
-          const token = await getToken();
-          dispatch({type: LOGIN, token: token})
+          try {
+            const token = await getToken();
+            dispatch({type: LOGIN, token: token})
+          } catch (err) {
+            throw err
+          }
       }
   }

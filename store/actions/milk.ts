@@ -6,11 +6,11 @@ export const DELETE_FEEDING = "DELETE_FEDDING";
 import { URL } from "../../constants/firebase";
 import Feeding from "../../domain/feeding";
 import { sortFeeding } from '../../utils/milk'
-import {getToken} from './auth'
 
 export const addFeeding = (feeding: Feeding) => {
   return async (dispatch, getState) => {
-    const response = await fetch(`${URL}feeding.json`, {
+    const token = getState().auth.token
+    const response = await fetch(`${URL}feeding.json?auth=${token}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,8 +34,9 @@ export const addFeeding = (feeding: Feeding) => {
 
 export const deleteFeeding = (id: string) => {
   return async (dispatch, getState) => {
+    const token = getState().auth.token
     const response = await fetch(
-      `${URL}feeding/${id}.json`,
+      `${URL}feeding/${id}.json?auth=${token}`,
       {
         method: "DELETE"
       }
@@ -49,7 +50,7 @@ export const deleteFeeding = (id: string) => {
 
 export const updateFeeding = (feeding: Feeding) => {
   return async (dispatch, getState) => {
-    const token = await getToken()
+    const token = getState().auth.token
     const response = await fetch(
       `${URL}feeding/${feeding.id}.json?auth=${token}`,
       {
