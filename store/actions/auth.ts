@@ -26,6 +26,8 @@ const getToken = async () => {
           message = "This email could not be found";
         } else if (errorId === "INVALID_PASSWORD") {
           message = "Wrong password";
+        } else if (errorId === "QUOTA_EXCEEDED : Exceeded quota for verifying passwords.") {
+          message = "Exceeded quota for verifying passwords.";
         }
         throw new Error(message);
       }

@@ -37,7 +37,7 @@ const FeedingEdit = (props) => {
       props.navigation.goBack();
     } catch (err) {
       console.log(err);
-      Alert.alert('Oops!', err)
+      Alert.alert('Oops!', err.message)
     }
   }, [id, dispatch]);
 
@@ -51,7 +51,7 @@ const FeedingEdit = (props) => {
       props.navigation.goBack();
     } catch (err) {
       console.log(err);
-      Alert.alert('Oops!', err)
+      Alert.alert('Oops!', err.message)
     }
   }, [id, date, volume, dispatch]);
 

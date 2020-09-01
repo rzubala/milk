@@ -17,7 +17,7 @@ const StartupScreen = (props) => {
       try {
         await dispatch(authActions.login());
       } catch (err) {
-        Alert.alert('Oops!', err)
+        Alert.alert('Oops!', err.message)
       }
   };
 
